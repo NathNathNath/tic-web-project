@@ -1,8 +1,15 @@
 import { AuthProvider } from "react-admin";
-
+import { authLogin } from "../service/base.api";
 const authProvider: AuthProvider = {
   login: ({ username, password }) => {
-    if (username === "login" && password === "password") {
+    authLogin("login", 
+    {
+      "username":"superadmin",
+      "password":"admin1234"
+    }).then((data) => {
+      console.log(data);
+    });
+    /*if (username === "login" && password === "password") {
       localStorage.setItem("login", "mak");
       localStorage.setItem("authenticated", "true");
       //localStorage.removeItem("role");
@@ -15,7 +22,7 @@ const authProvider: AuthProvider = {
       return Promise.resolve();
     } else {
       localStorage.setItem("authenticated", "false");
-    }
+    }*/
     return Promise.reject();
   },
   logout: () => {
