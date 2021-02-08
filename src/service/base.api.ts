@@ -25,14 +25,21 @@ export const authRefresh = (endpoint: string, params: any) => {};
 const getAllMerchant: string = "merchant/getMerchant/getAll";
 const createMerchant: string = "merchant/add/addMerchant";
 
+const getAllBranches: string = "branches/getBranches/getAll";
+const addBranch: string = "branches/addBranches/add";
+
 function API(method: string, accessor: string) {
   if (method === "getList") {
     if (accessor === "merchant") {
       return getAllMerchant;
+    }else if( accessor === "branch"){
+        return getAllBranches;
     }
   } else if (method === "create") {
     if (accessor === "merchant"){
       return createMerchant;
+    }else if(accessor === "branch"){
+        return addBranch;
     }
   }
 }
