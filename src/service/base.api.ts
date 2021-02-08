@@ -31,6 +31,9 @@ const getUserById: string = "users/getUserById";
 const createUser: string = "users/addUser";
 const updateUser: string = "users/updateUser";
 const getAllRoles: string = "roles/getallrole";
+//Branch
+const getAllBranches: string = "branches/getBranches/getAll";
+const addBranch: string = "branches/addBranches/add";
 
 function API(method: string, accessor: string) {
   if (method === "getList") {
@@ -40,6 +43,8 @@ function API(method: string, accessor: string) {
       return getAllUsers;
     } else if (accessor === "roles") {
       return getAllRoles;
+    } else if (accessor === "branch") {
+      return getAllBranches;
     }
   } else if (method === "getMany") {
     if (accessor === "roles") {
@@ -50,6 +55,8 @@ function API(method: string, accessor: string) {
       return createMerchant;
     } else if (accessor === "users") {
       return createUser;
+    } else if (accessor === "branch") {
+      return addBranch;
     }
   } else if (method === "update") {
     if (accessor === "merchant") {

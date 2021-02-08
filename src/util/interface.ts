@@ -9,3 +9,9 @@ export interface Merchant extends Record {
   business_name: string;
   business_type: string;
 }
+
+export interface Branch extends Record {
+  id: Identifier;
+  business_name: string;
+  business_type: string;
+}

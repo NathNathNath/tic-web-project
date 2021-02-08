@@ -1,0 +1,68 @@
+import * as React from "react";
+import { FC } from "react";
+import {
+  List,
+  ListProps,
+  Datagrid,
+  TextField,
+  NumberInput,
+  TextInput,
+  DateField,
+  ReferenceField,
+  NumberField,
+  Filter,
+  FilterProps,
+  DateInput,
+  useListContext,
+} from "react-admin";
+import { makeStyles } from "@material-ui/core/styles";
+import { Branch } from "../../util/interface";
+import BranchDetails from "./BranchDetails";
+
+const ListFilters = (props: Omit<FilterProps, "children">) => (
+  <Filter {...props}>
+    <DateInput source="createdAt" />
+    <DateInput source="date_lte" />
+    <NumberInput label="id" source="id" />
+    <TextInput source="name" />
+  </Filter>
+);
+
+const useStyles = makeStyles((theme) => ({
+  hiddenOnSmallScreens: {
+    display: "table-cell",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+}));
+
+const BranchList: FC<ListProps> = (props) => {
+  const classes = useStyles();
+
+  return (
+    <List
+      {...props}
+      filters={<ListFilters />}
+      perPage={25}
+      sort={{ field: "date", order: "desc" }}
+    >
+      <Datagrid rowClick="expand" expand={<BranchDetails />}>
+        <TextField label="Name" source="name" />
+        <TextField label="Description" source="description" />
+        <TextField label="Merchant ID" source="merchant_id" />
+        <TextField label="QR Code" source="qrcode_path" />
+        <TextField label="Licenses" source="licenses" />
+        <TextField label="Name" source="bill_type" />
+        <TextField label="Validated" source="validated" />
+        <TextField label="Active" source="is_active" />
+        <TextField label="Radius" source="radius" />
+        <TextField label="Latitude" source="lat" />
+        <TextField label="Longitude" source="long" />
+        <TextField label="Merchant E-mail" source="merchant_email_address" />
+      </Datagrid>
+    </List>
+  );
+};
+
+export default BranchList;
