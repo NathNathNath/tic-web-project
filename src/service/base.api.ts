@@ -23,6 +23,7 @@ export const authRefresh = (endpoint: string, params: any) => {};
 //APIs
 //Merchant
 const getAllMerchant: string = "merchant/getMerchant/getAll";
+const getOneMerchant: string = "merchant";
 const createMerchant: string = "merchant/add/addMerchant";
 const updateMerchant: string = "merchant/toUpdate/updateMerchant";
 //Users
@@ -67,6 +68,8 @@ function API(method: string, accessor: string) {
   } else if (method === "getOne") {
     if (accessor === "users") {
       return getUserById;
+    } else if (accessor === "merchant") {
+      return getOneMerchant;
     }
   }
 }
