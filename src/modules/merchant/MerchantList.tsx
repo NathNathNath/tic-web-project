@@ -47,6 +47,8 @@ const MerchantList: FC<ListProps> = (props) => {
       <Datagrid rowClick="expand" expand={<MerchantDetails />}>
         <TextField source="business_name" />
         <TextField source="business_type" />
+        <TextField source="description" />
+        <TextField source="business_type" />
       </Datagrid>
     </List>
   );
