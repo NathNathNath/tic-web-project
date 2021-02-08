@@ -21,10 +21,12 @@ export const authLogin = (endpoint: string, params: any) => {
 export const authRefresh = (endpoint: string, params: any) => {};
 
 //APIs
+
 //Merchant
 const getAllMerchant: string = "merchant/getMerchant/getAll";
 const createMerchant: string = "merchant/add/addMerchant";
 
+//Branch
 const getAllBranches: string = "branches/getBranches/getAll";
 const addBranch: string = "branches/addBranches/add";
 
