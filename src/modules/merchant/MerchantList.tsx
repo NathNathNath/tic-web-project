@@ -12,6 +12,7 @@ import {
   FilterProps,
   DateInput,
   useListContext,
+  EditButton,
 } from "react-admin";
 import { makeStyles } from "@material-ui/core/styles";
 import { Merchant } from "../../util/interface";
@@ -44,9 +45,10 @@ const MerchantList: FC<ListProps> = (props) => {
       perPage={25}
       sort={{ field: "date", order: "desc" }}
     >
-      <Datagrid rowClick="expand" expand={<MerchantDetails />}>
+      <Datagrid rowClick="expand">
         <TextField source="business_name" />
         <TextField source="business_type" />
+        <EditButton />
       </Datagrid>
     </List>
   );

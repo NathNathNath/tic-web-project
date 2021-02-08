@@ -24,6 +24,7 @@ export const authRefresh = (endpoint: string, params: any) => {};
 //Merchant
 const getAllMerchant: string = "merchant/getMerchant/getAll";
 const createMerchant: string = "merchant/add/addMerchant";
+const updateMerchant: string = "merchant/toUpdate/updateMerchant"
 
 function API(method: string, accessor: string) {
   if (method === "getList") {
@@ -33,6 +34,10 @@ function API(method: string, accessor: string) {
   } else if (method === "create") {
     if (accessor === "merchant"){
       return createMerchant;
+    }
+  } else if (method === "update") {
+    if (accessor === "merchant") {
+      return updateMerchant;
     }
   }
 }
@@ -53,13 +58,14 @@ export default {
 
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: 1,
+      total: json.length,
     }));
   },
-  getOne: (endpoint: string, params: any) =>
-    httpClient(`${apiUrl}/${endpoint}/${params.id}`).then(({ json }) => ({
+  getOne: (endpoint: string, params: any) => {
+    return httpClient(`${apiUrl}/${endpoint}/${params.id}`).then(({ json }) => ({
       data: json,
-    })),
+    }));
+  },
   getMany: (endpoint: string, params: any) => {
     const query = {
       filter: JSON.stringify({ id: params.ids }),
@@ -82,14 +88,16 @@ export default {
 
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: 1,
+      total: json.length,
     }));
   },
-  update: (endpoint: string, params: any) =>
-    httpClient(`${apiUrl}/${endpoint}/${params.id}`, {
+  update: (endpoint: string, params: any) => {
+    var apiEndpoint = API("update", endpoint);
+    return httpClient(`${apiUrl}/${apiEndpoint}`, {
       method: "PUT",
       body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ data: json })),
+    }).then(({ json }) => ({ data: params.data}));
+  },
   updateMany: (endpoint: string, params: any) => {
     const query = {
       filter: JSON.stringify({ id: params.ids }),

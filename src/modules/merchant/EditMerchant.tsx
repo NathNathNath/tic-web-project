@@ -1,7 +1,6 @@
 import * as React from "react";
 import { FC } from "react";
 import {
-  Create,
   FormTab,
   NumberInput,
   ReferenceInput,
@@ -10,9 +9,12 @@ import {
   TextInput,
   required,
   CreateProps,
+  Edit,
+  SaveButton,
 } from "react-admin";
-import { Grid, InputAdornment, Typography } from "@material-ui/core";
+import { Grid, InputAdornment, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Merchant } from "../../util/interface";
 
 const useStyles = makeStyles({
   price: { width: "7em" },
@@ -23,10 +25,18 @@ const useStyles = makeStyles({
   heightFormGroup: { display: "inline-block", marginLeft: 32 },
 });
 
-const AddMerchant: FC<CreateProps> = (props) => {
+interface TitleProps {
+  record?: Merchant;
+}
+
+const Title: FC<TitleProps> = ({ record }) => {
+  return record ? <span>{record.business_name}</span> : null;
+}
+
+const EditMerchant: FC<CreateProps> = (props) => {
   const classes = useStyles();
   return (
-    <Create {...props}>
+    <Edit {...props} title={<Title />}>
       <TabbedForm>
         <FormTab label="Information">
           <TextInput
@@ -49,8 +59,8 @@ const AddMerchant: FC<CreateProps> = (props) => {
           <NumberInput label="No. of Branches" source="branches" validate={required()} />
         </FormTab>
       </TabbedForm>
-    </Create>
+    </Edit>
   );
 };
 
-export default AddMerchant;
+export default EditMerchant;
