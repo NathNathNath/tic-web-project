@@ -6,14 +6,16 @@ import { DashboardMenuItem, MenuItemLink, MenuProps } from "react-admin";
 
 import { AppState } from "../util/types";
 import dashboard from "./../modules/dashboard";
+import users from "./../modules/users";
 import merchant from "./../modules/merchant";
 import branch from "./../modules/branch";
 
-type MenuName = "menuMerchant" | "menuBranch";
+type MenuName = "menuUser" | "menuMerchant" | "menuBranch";
 
 const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
   const open = useSelector((state: AppState) => state.admin.ui.sidebarOpen);
   const [state, setState] = useState({
+    menuUser: true,
     menuMerchant: true,
     menuBranch: true,
   });
@@ -23,6 +25,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
   return (
     <Box mt={2}>
       <DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
+      <MenuItemLink
+        to={`/users`}
+        primaryText={"Users"}
+        leftIcon={<users.icon />}
+        onClick={onMenuClick}
+        sidebarIsOpen={open}
+        dense={dense}
+      />
       <MenuItemLink
         to={`/merchant`}
         primaryText={"Merchant"}

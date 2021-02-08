@@ -11,6 +11,7 @@ import {
   CreateProps,
   Edit,
   SaveButton,
+  EditProps,
 } from "react-admin";
 import { Grid, InputAdornment, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -31,9 +32,9 @@ interface TitleProps {
 
 const Title: FC<TitleProps> = ({ record }) => {
   return record ? <span>{record.business_name}</span> : null;
-}
+};
 
-const EditMerchant: FC<CreateProps> = (props) => {
+const EditMerchant: FC<EditProps> = (props) => {
   const classes = useStyles();
   return (
     <Edit {...props} title={<Title />}>
@@ -46,17 +47,30 @@ const EditMerchant: FC<CreateProps> = (props) => {
             fullWidth
             validate={required()}
           />
-          <TextInput label="Description" source="description" fullWidth validate={required()} />
+          <TextInput
+            label="Description"
+            source="description"
+            fullWidth
+            validate={required()}
+          />
           <TextInput label="Merchant ID" source="merchant_id" fullWidth />
           <TextInput label="Business Type" source="business_type" fullWidth />
           <TextInput label="Contact Person" source="contact_person" />
           <NumberInput label="Contact Number" source="contact_number" />
           <TextInput label="Email Address" source="merchant_email_address" />
-          <TextInput source="is_active" defaultValue="true" disabled/>
+          <TextInput source="is_active" defaultValue="true" disabled />
         </FormTab>
         <FormTab label="License">
-          <NumberInput label="No. of Talk Licenses" source="licenses" validate={required()} />
-          <NumberInput label="No. of Branches" source="branches" validate={required()} />
+          <NumberInput
+            label="No. of Talk Licenses"
+            source="licenses"
+            validate={required()}
+          />
+          <NumberInput
+            label="No. of Branches"
+            source="branches"
+            validate={required()}
+          />
         </FormTab>
       </TabbedForm>
     </Edit>

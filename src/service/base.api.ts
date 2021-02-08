@@ -24,20 +24,42 @@ export const authRefresh = (endpoint: string, params: any) => {};
 //Merchant
 const getAllMerchant: string = "merchant/getMerchant/getAll";
 const createMerchant: string = "merchant/add/addMerchant";
-const updateMerchant: string = "merchant/toUpdate/updateMerchant"
+const updateMerchant: string = "merchant/toUpdate/updateMerchant";
+//Users
+const getAllUsers: string = "users/getAllUsers";
+const getUserById: string = "users/getUserById";
+const createUser: string = "users/addUser";
+const updateUser: string = "users/updateUser";
+const getAllRoles: string = "roles/getallrole";
 
 function API(method: string, accessor: string) {
   if (method === "getList") {
     if (accessor === "merchant") {
       return getAllMerchant;
+    } else if (accessor === "users") {
+      return getAllUsers;
+    } else if (accessor === "roles") {
+      return getAllRoles;
+    }
+  } else if (method === "getMany") {
+    if (accessor === "roles") {
+      return getAllRoles;
     }
   } else if (method === "create") {
-    if (accessor === "merchant"){
+    if (accessor === "merchant") {
       return createMerchant;
+    } else if (accessor === "users") {
+      return createUser;
     }
   } else if (method === "update") {
     if (accessor === "merchant") {
       return updateMerchant;
+    } else if (accessor === "users") {
+      return updateUser;
+    }
+  } else if (method === "getOne") {
+    if (accessor === "users") {
+      return getUserById;
     }
   }
 }
@@ -62,16 +84,24 @@ export default {
     }));
   },
   getOne: (endpoint: string, params: any) => {
-    return httpClient(`${apiUrl}/${endpoint}/${params.id}`).then(({ json }) => ({
-      data: json,
-    }));
+    var apiEndpoint = API("getOne", endpoint);
+    return httpClient(`${apiUrl}/${apiEndpoint}/${params.id}`).then(
+      ({ json }) => ({
+        data: json,
+      })
+    );
   },
   getMany: (endpoint: string, params: any) => {
+    console.log(endpoint);
+    var apiEndpoint = API("getMany", endpoint);
     const query = {
       filter: JSON.stringify({ id: params.ids }),
     };
-    const url = `${apiUrl}/${endpoint}?${stringify(query)}`;
-    return httpClient(url).then(({ json }) => ({ data: json }));
+    const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
+    return httpClient(url).then(({ json }) => ({
+      data: json,
+      total: json.length,
+    }));
   },
   getManyReference: (endpoint: string, params: any) => {
     const { page, perPage } = params.pagination;
@@ -93,10 +123,11 @@ export default {
   },
   update: (endpoint: string, params: any) => {
     var apiEndpoint = API("update", endpoint);
+    console.log(params);
     return httpClient(`${apiUrl}/${apiEndpoint}`, {
       method: "PUT",
       body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ data: params.data}));
+    }).then(({ json }) => ({ data: params.data }));
   },
   updateMany: (endpoint: string, params: any) => {
     const query = {

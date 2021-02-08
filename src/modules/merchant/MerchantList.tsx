@@ -15,7 +15,6 @@ import {
   EditButton,
 } from "react-admin";
 import { makeStyles } from "@material-ui/core/styles";
-import { Merchant } from "../../util/interface";
 import MerchantDetails from "./MerchantDetails";
 
 const ListFilters = (props: Omit<FilterProps, "children">) => (
@@ -36,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 const MerchantList: FC<ListProps> = (props) => {
   const classes = useStyles();
-  //const { data, ids } = useListContext<Merchant>();
 
   return (
     <List
