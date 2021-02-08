@@ -4,7 +4,9 @@ import jsonServerProvider from "ra-data-json-server";
 
 import authProvider from "./session/authProvider";
 import { Layout, Login, Dashboard } from "./commons";
-const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
+import merchant from "./modules/merchant";
+import branch from "./modules/branch";
+import dataProvider from "./service/base.api";
 
 function Main() {
   return (
@@ -16,7 +18,8 @@ function Main() {
       loginPage={Login}
       layout={Layout}
     >
-      <Resource name="Merchants" />
+      <Resource name="merchant" {...merchant} />
+      <Resource name="branch" {...branch} />
     </Admin>
   );
 }

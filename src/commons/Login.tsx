@@ -82,8 +82,11 @@ const Login: FC = () => {
 
   const handleSubmit = (auth: LoginForm) => {
     setLoading(true);
-    login(auth, location.state ? location.state.nextPathname : "/").catch(
-      (error: Error) => {
+    login(auth, location.state ? location.state.nextPathname : "/")
+      .then(() => {
+        console.log("Welcome!");
+      })
+      .catch((error: Error) => {
         setLoading(false);
         notify(
           typeof error === "string"
@@ -101,8 +104,7 @@ const Login: FC = () => {
                 : undefined,
           }
         );
-      }
-    );
+      });
   };
 
   const validate = (values: LoginForm) => {
