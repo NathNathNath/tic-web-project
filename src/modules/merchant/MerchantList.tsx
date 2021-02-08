@@ -14,8 +14,8 @@ import {
   useListContext,
 } from "react-admin";
 import { makeStyles } from "@material-ui/core/styles";
-import AddMerchant from "./AddMerchant";
 import { Merchant } from "../../util/interface";
+import MerchantDetails from "./MerchantDetails";
 
 const ListFilters = (props: Omit<FilterProps, "children">) => (
   <Filter {...props}>
@@ -44,8 +44,9 @@ const MerchantList: FC<ListProps> = (props) => {
       perPage={25}
       sort={{ field: "date", order: "desc" }}
     >
-      <Datagrid rowClick="expand" expand={<AddMerchant />}>
+      <Datagrid rowClick="expand" expand={<MerchantDetails />}>
         <TextField source="business_name" />
+        <TextField source="business_type" />
       </Datagrid>
     </List>
   );

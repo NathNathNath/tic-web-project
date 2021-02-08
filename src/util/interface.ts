@@ -6,6 +6,6 @@ export interface LoginForm {
 
 export interface Merchant extends Record {
   id: Identifier;
-  businessName: string;
-  businessType: string;
+  business_name: string;
+  business_type: string;
 }

@@ -23,11 +23,16 @@ export const authRefresh = (endpoint: string, params: any) => {};
 //APIs
 //Merchant
 const getAllMerchant: string = "merchant/getMerchant/getAll";
+const createMerchant: string = "merchant/add/addMerchant";
 
 function API(method: string, accessor: string) {
   if (method === "getList") {
     if (accessor === "merchant") {
       return getAllMerchant;
+    }
+  } else if (method === "create") {
+    if (accessor === "merchant"){
+      return createMerchant;
     }
   }
 }
@@ -94,13 +99,15 @@ export default {
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({ data: json }));
   },
-  create: (endpoint: string, params: any) =>
-    httpClient(`${apiUrl}/${endpoint}`, {
+  create: (endpoint: string, params: any) => {
+    var apiEndpoint = API("create", endpoint);
+    return httpClient(`${apiUrl}/${apiEndpoint}`, {
       method: "POST",
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({
       data: { ...params.data, id: json.id },
-    })),
+    }));
+  },
   deleteMany: (endpoint: string, params: any) => {
     const query = {
       filter: JSON.stringify({ id: params.ids }),

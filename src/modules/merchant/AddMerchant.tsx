@@ -1,37 +1,55 @@
 import * as React from "react";
 import { FC } from "react";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import {
-  useShowController,
-  ReferenceField,
-  TextField,
-  FieldProps,
+  Create,
+  FormTab,
+  NumberInput,
+  ReferenceInput,
+  SelectInput,
+  TabbedForm,
+  TextInput,
+  required,
+  CreateProps,
 } from "react-admin";
+import { Grid, InputAdornment, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
-  root: { width: 600, margin: "auto" },
-  spacer: { height: 20 },
-  invoices: { margin: "10px 0" },
+  price: { width: "7em" },
+  width: { width: "7em" },
+  height: { width: "7em" },
+  stock: { width: "7em" },
+  widthFormGroup: { display: "inline-block" },
+  heightFormGroup: { display: "inline-block", marginLeft: 32 },
 });
 
-const AddMerchant = (props: any) => {
+const AddMerchant: FC<CreateProps> = (props) => {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Typography variant="h6" gutterBottom>
-              Posters Galore
-            </Typography>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
+    <Create {...props}>
+      <TabbedForm>
+        <FormTab label="Information">
+          <TextInput
+            autoFocus
+            label="Business Name"
+            source="business_name"
+            fullWidth
+            validate={required()}
+          />
+          <TextInput label="Description" source="description" fullWidth validate={required()} />
+          <TextInput label="Merchant ID" source="merchant_id" fullWidth />
+          <TextInput label="Business Type" source="business_type" fullWidth />
+          <TextInput label="Contact Person" source="contact_person" />
+          <TextInput label="Contact Number" source="contact_number" />
+          <TextInput label="Email Address" source="merchant_email_address" />
+          <TextInput source="is_active" defaultValue="true" disabled/>
+        </FormTab>
+        <FormTab label="License">
+          <NumberInput label="No. of Talk Licenses" source="licenses" validate={required()} />
+          <NumberInput label="No. of Branches" source="branches" validate={required()} />
+        </FormTab>
+      </TabbedForm>
+    </Create>
   );
 };
 
