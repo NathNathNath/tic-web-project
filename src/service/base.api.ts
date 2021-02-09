@@ -1,7 +1,8 @@
 import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
 
-export const apiUrl = "http://localhost:3001";
+export const apiUrl = "http://192.168.0.109:3001";
+// export const apiUrl = "http://10.169.2.206:3001";
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {
     options.headers = new Headers({ Accept: "application/json" });
@@ -35,6 +36,8 @@ const getAllRoles: string = "roles/getallrole";
 //Branch
 const getAllBranches: string = "branches/getBranches/getAll";
 const addBranch: string = "branches/addBranches/add";
+const getOneBranch: string = "branches"
+const updateBranch: string = "branches/toUpdate/updateBranch";
 
 function API(method: string, accessor: string) {
   if (method === "getList") {
@@ -64,12 +67,17 @@ function API(method: string, accessor: string) {
       return updateMerchant;
     } else if (accessor === "users") {
       return updateUser;
+    } else if (accessor === "branch"){
+      return updateBranch;
     }
   } else if (method === "getOne") {
     if (accessor === "users") {
       return getUserById;
     } else if (accessor === "merchant") {
       return getOneMerchant;
+    } 
+    else if (accessor === "branch"){
+      return getOneBranch;
     }
   }
 }

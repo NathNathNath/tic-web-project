@@ -14,12 +14,11 @@ import {
   FilterProps,
   DateInput,
   useListContext,
-  EditButton,
   BooleanInput,
 } from "react-admin";
 import { makeStyles } from "@material-ui/core/styles";
-import { Branch } from "../../util/interface";
-import BranchDetails from "./BranchDetails";
+import { Menu } from "../../util/interface";
+import MenuDetails from "./MenuDetails";
 
 const ListFilters = (props: Omit<FilterProps, "children">) => (
   <Filter {...props}>
@@ -40,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BranchList: FC<ListProps> = (props) => {
+const MenuList: FC<ListProps> = (props) => {
   const classes = useStyles();
 
   return (
@@ -50,7 +49,7 @@ const BranchList: FC<ListProps> = (props) => {
       perPage={25}
       sort={{ field: "date", order: "desc" }}
     >
-      <Datagrid rowClick="expand">
+      <Datagrid rowClick="expand" expand={<MenuDetails />}>
         <TextField label="Name" source="name" />
         <TextField label="Description" source="description" />
         <TextField label="Merchant ID" source="merchant_id" />
@@ -63,10 +62,9 @@ const BranchList: FC<ListProps> = (props) => {
         <TextField label="Latitude" source="lat" />
         <TextField label="Longitude" source="long" />
         <TextField label="Merchant E-mail" source="merchant_email_address" />
-        <EditButton />
       </Datagrid>
     </List>
   );
 };
 
-export default BranchList;
+export default MenuList;
