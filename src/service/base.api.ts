@@ -82,16 +82,20 @@ export default {
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const query = {
-      sort: JSON.stringify([field, order]),
-      range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
+      order: JSON.stringify(order),
+      sortByName:JSON.stringify(field),
+      limit: JSON.stringify( (page * perPage)),
+      offset:JSON.stringify((page - 1) * perPage),
       filter: JSON.stringify(params.filter),
     };
-    const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
 
+    const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: json.length,
-    }));
+      total: parseInt(headers.get('count')||''),
+    }
+    )
+    );
   },
   getOne: (endpoint: string, params: any) => {
     var apiEndpoint = API("getOne", endpoint);
@@ -154,7 +158,7 @@ export default {
       method: "POST",
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({
-      data: { ...params.data, id: json.id },
+      data: { ...params.data, id: json},
     }));
   },
   deleteMany: (endpoint: string, params: any) => {

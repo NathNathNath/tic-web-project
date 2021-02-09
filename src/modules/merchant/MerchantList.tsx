@@ -40,8 +40,8 @@ const MerchantList: FC<ListProps> = (props) => {
     <List
       {...props}
       filters={<ListFilters />}
-      perPage={25}
-      sort={{ field: "date", order: "desc" }}
+      perPage={5}
+      sort={{ field: "updatedAt", order: "desc" }}
     >
       <Datagrid rowClick="expand">
         <TextField source="business_name" />
