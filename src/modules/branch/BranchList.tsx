@@ -57,8 +57,8 @@ const BranchList: FC<ListProps> = (props) => {
         <TextField label="QR Code" source="qrcode_path" />
         <TextField label="Licenses" source="licenses" />
         <TextField label="Bill Type" source="bill_type" />
-        <TextField label="Validated" source="validated" />
-        <TextField label="Active" source="is_active" />
+        {/* <TextField label="Validated" source="validated" />
+        <TextField label="Active" source="is_active" /> */}
         <TextField label="Radius" source="radius" />
         <TextField label="Latitude" source="lat" />
         <TextField label="Longitude" source="long" />

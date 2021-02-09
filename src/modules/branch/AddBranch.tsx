@@ -42,10 +42,10 @@ const AddBranch: FC<CreateProps> = (props) => {
           <TextInput label="Merchant ID" source="merchant_id" fullWidth />
           <TextInput label="QR Code" source="qrcode_path" fullWidth />
           <NumberInput label="Licenses" source="licenses" />
-          <TextInput label="Bill Type" source="bill_type" />
+          <TextInput label="Bill Type" source="bill_type" validate={required()} />
           <BooleanInput label="Validated" source="validated" />
           <TextInput source="is_active" defaultValue="true" disabled/>
-          <TextInput label="Merchant E-mail" source="merchant_email_address" type="email" />
+          <TextInput label="Merchant E-mail" source="merchant_email_address" type="email" validate={required()} />
         </FormTab>
         <FormTab label="Coordinates">
           <NumberInput label="Radius" source="radius" validate={required()} />
