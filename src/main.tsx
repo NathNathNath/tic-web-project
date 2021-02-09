@@ -7,6 +7,7 @@ import { Layout, Login, Dashboard } from "./commons";
 import merchant from "./modules/merchant";
 import branch from "./modules/branch";
 import users from "./modules/users";
+import roles from "./modules/roles";
 import dataProvider from "./service/base.api";
 
 function Main() {
@@ -20,6 +21,9 @@ function Main() {
       layout={Layout}
     >
       <Resource name="users" {...users} />
+      <Resource name="userSelect" />
+      <Resource name="roles" {...roles} />
+      <Resource name="roleSelect" />
       <Resource name="merchant" {...merchant} />
       <Resource name="branch" {...branch} />
     </Admin>
