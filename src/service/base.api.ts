@@ -1,7 +1,8 @@
 import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
 
-export const apiUrl = "http://localhost:3001";
+export const apiUrl = "http://192.168.0.109:3001";
+// export const apiUrl = "http://10.169.2.206:3001";
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {
     options.headers = new Headers({ Accept: "application/json" });
@@ -32,24 +33,32 @@ const getUserById: string = "users/getUserById";
 const createUser: string = "users/addUser";
 const updateUser: string = "users/updateUser";
 const getAllRoles: string = "roles/getallrole";
+const getAllRolesAssigned: string = "roles/getAllRoleAssigned";
+const assignRole: string = "roles/assignrole";
 //Branch
 const getAllBranches: string = "branches/getBranches/getAll";
 const addBranch: string = "branches/addBranches/add";
+const getOneBranch: string = "branches";
+const updateBranch: string = "branches/toUpdate/updateBranch";
 
 function API(method: string, accessor: string) {
   if (method === "getList") {
     if (accessor === "merchant") {
       return getAllMerchant;
-    } else if (accessor === "users") {
+    } else if (accessor === "users" || accessor === "userSelect") {
       return getAllUsers;
     } else if (accessor === "roles") {
-      return getAllRoles;
+      return getAllRolesAssigned;
     } else if (accessor === "branch") {
       return getAllBranches;
+    } else if (accessor === "roleSelect") {
+      return getAllRoles;
     }
   } else if (method === "getMany") {
-    if (accessor === "roles") {
+    if (accessor === "roleSelect") {
       return getAllRoles;
+    } else if (accessor === "userSelect") {
+      return getAllUsers;
     }
   } else if (method === "create") {
     if (accessor === "merchant") {
@@ -58,18 +67,24 @@ function API(method: string, accessor: string) {
       return createUser;
     } else if (accessor === "branch") {
       return addBranch;
+    } else if (accessor === "roles") {
+      return assignRole;
     }
   } else if (method === "update") {
     if (accessor === "merchant") {
       return updateMerchant;
     } else if (accessor === "users") {
       return updateUser;
+    } else if (accessor === "branch") {
+      return updateBranch;
     }
   } else if (method === "getOne") {
     if (accessor === "users") {
       return getUserById;
     } else if (accessor === "merchant") {
       return getOneMerchant;
+    } else if (accessor === "branch") {
+      return getOneBranch;
     }
   }
 }
@@ -153,6 +168,7 @@ export default {
     }).then(({ json }) => ({ data: json }));
   },
   create: (endpoint: string, params: any) => {
+    console.log(endpoint);
     var apiEndpoint = API("create", endpoint);
     return httpClient(`${apiUrl}/${apiEndpoint}`, {
       method: "POST",

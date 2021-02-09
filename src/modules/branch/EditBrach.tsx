@@ -1,20 +1,30 @@
 import * as React from "react";
 import { FC } from "react";
 import {
-  Create,
   FormTab,
   NumberInput,
-  BooleanInput,
-  EmailField,
   ReferenceInput,
   SelectInput,
   TabbedForm,
   TextInput,
   required,
+  BooleanInput,
   CreateProps,
+  Edit,
+  SaveButton,
+  EditProps,
 } from "react-admin";
-import { Grid, InputAdornment, Typography } from "@material-ui/core";
+import { Grid, InputAdornment, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Branch } from "../../util/interface";
+
+interface TitleProps {
+    record?: Branch;
+  }
+  
+  const Title: FC<TitleProps> = ({ record }) => {
+    return record ? <span>{record.business_name}</span> : null;
+  };
 
 const useStyles = makeStyles({
   price: { width: "7em" },
@@ -25,10 +35,11 @@ const useStyles = makeStyles({
   heightFormGroup: { display: "inline-block", marginLeft: 32 },
 });
 
-const AddBranch: FC<CreateProps> = (props) => {
+
+const EditBranch: FC<EditProps> = (props) => {
   const classes = useStyles();
   return (
-    <Create {...props}>
+    <Edit {...props} >
       <TabbedForm>
         <FormTab label="Information">
           <TextInput
@@ -42,10 +53,10 @@ const AddBranch: FC<CreateProps> = (props) => {
           <TextInput label="Merchant ID" source="merchant_id" fullWidth />
           <TextInput label="QR Code" source="qrcode_path" fullWidth />
           <NumberInput label="Licenses" source="licenses" />
-          <TextInput label="Bill Type" source="bill_type" validate={required()} />
+          <TextInput label="Bill Type" source="bill_type" />
           <BooleanInput label="Validated" source="validated" />
           <TextInput source="is_active" defaultValue="true" disabled/>
-          <TextInput label="Merchant E-mail" source="merchant_email_address" type="email" validate={required()} />
+          <TextInput label="Merchant E-mail" source="merchant_email_address" type="email" />
         </FormTab>
         <FormTab label="Coordinates">
           <NumberInput label="Radius" source="radius" validate={required()} />
@@ -53,8 +64,8 @@ const AddBranch: FC<CreateProps> = (props) => {
           <NumberInput label="Longitude" source="long" validate={required()} />
         </FormTab>
       </TabbedForm>
-    </Create>
+    </Edit>
   );
 };
 
-export default AddBranch;
+export default EditBranch;
