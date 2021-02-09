@@ -30,6 +30,20 @@ export interface Branches extends Record{
   long: number,
   merchant_email_address: string
 }
+
+export interface Branches extends Record{
+  id: Identifier,
+  name: string,
+  merchant_id: string,
+  qrcode_path: string,
+  licenses: number,
+  bill_type: string,
+  validated: boolean,
+  is_active: boolean,
+  radius: number,
+  lat: number,
+  long: number,
+  merchant_email_address: string
 export interface Menu extends Record {
   id: Identifier
 }
