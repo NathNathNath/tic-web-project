@@ -15,3 +15,7 @@ export interface Branch extends Record {
   business_name: string;
   business_type: string;
 }
+
+export interface Menu extends Record {
+  id: Identifier
+}

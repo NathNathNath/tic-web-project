@@ -5,9 +5,6 @@ import {
   FormTab,
   NumberInput,
   BooleanInput,
-  EmailField,
-  ReferenceInput,
-  SelectInput,
   TabbedForm,
   TextInput,
   required,
@@ -25,7 +22,7 @@ const useStyles = makeStyles({
   heightFormGroup: { display: "inline-block", marginLeft: 32 },
 });
 
-const AddBranch: FC<CreateProps> = (props) => {
+const AddMenu: FC<CreateProps> = (props) => {
   const classes = useStyles();
   return (
     <Create {...props}>
@@ -42,10 +39,10 @@ const AddBranch: FC<CreateProps> = (props) => {
           <TextInput label="Merchant ID" source="merchant_id" fullWidth />
           <TextInput label="QR Code" source="qrcode_path" fullWidth />
           <NumberInput label="Licenses" source="licenses" />
-          <TextInput label="Bill Type" source="bill_type" validate={required()} />
+          <TextInput label="Bill Type" source="bill_type" />
           <BooleanInput label="Validated" source="validated" />
           <TextInput source="is_active" defaultValue="true" disabled/>
-          <TextInput label="Merchant E-mail" source="merchant_email_address" type="email" validate={required()} />
+          <TextInput label="Merchant E-mail" source="merchant_email_address" type="email" />
         </FormTab>
         <FormTab label="Coordinates">
           <NumberInput label="Radius" source="radius" validate={required()} />
@@ -57,4 +54,4 @@ const AddBranch: FC<CreateProps> = (props) => {
   );
 };
 
-export default AddBranch;
+export default AddMenu;

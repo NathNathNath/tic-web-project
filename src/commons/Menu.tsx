@@ -9,6 +9,7 @@ import dashboard from "./../modules/dashboard";
 import users from "./../modules/users";
 import merchant from "./../modules/merchant";
 import branch from "./../modules/branch";
+import menu from "./../modules/menu";
 
 type MenuName = "menuUser" | "menuMerchant" | "menuBranch";
 
@@ -45,6 +46,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
         to={`/branch`}
         primaryText={"Branch"}
         leftIcon={<branch.icon />}
+        onClick={onMenuClick}
+        sidebarIsOpen={open}
+        dense={dense}
+      />
+      <MenuItemLink
+        to={`/menu`}
+        primaryText={"Menu"}
+        leftIcon={<menu.icon />}
         onClick={onMenuClick}
         sidebarIsOpen={open}
         dense={dense}

@@ -44,15 +44,14 @@ const MerchantList: FC<ListProps> = (props) => {
       sort={{ field: "date", order: "desc" }}
     >
       <Datagrid rowClick="expand">
-        <TextField source="business_name" />
-        <TextField source="business_type" />
-        <TextField source="merchant_id" />
-        <TextField source="business_type" />
-        <TextField source="licenses" />
-        <TextField source="branches" />
-        <TextField source="contact_person" />
-        <TextField source="contact_number" />
-        <TextField source="merchant_email_address" />
+        <TextField label="Business Name" source="business_name" />
+        <TextField label="Business Type" source="business_type" />
+        <TextField label="Merchant ID" source="merchant_id" />
+        <TextField label="Licenses" source="licenses" />
+        <TextField label="Branches" source="branches" />
+        <TextField label="Contact Person" source="contact_person" />
+        <TextField label="Contact Number" source="contact_number" />
+        <TextField label="Merchant E-mail" source="merchant_email_address" />
         <EditButton />
       </Datagrid>
     </List>
