@@ -19,7 +19,14 @@ export const authLogin = (endpoint: string, params: any) => {
   }).then((response) => ({ response }));
 };
 
-export const authRefresh = (endpoint: string, params: any) => {};
+export const authRefresh = (endpoint: string, params: any) => {
+  const token = localStorage.getItem("refreshToken");
+  return httpClient(`${apiUrl}/${endpoint}`, {
+    method: "POST",
+    headers: new Headers({ Authorization: "Bearer " + token }),
+    body: JSON.stringify(params),
+  }).then((response) => ({ response }));
+};
 
 //APIs
 //Merchant
@@ -40,6 +47,10 @@ const getAllBranches: string = "branches/getBranches/getAll";
 const addBranch: string = "branches/addBranches/add";
 const getOneBranch: string = "branches";
 const updateBranch: string = "branches/toUpdate/updateBranch";
+//Menu
+const createMenu: string = "menu/addMenu/add";
+const getAllMenu: string = "menu/getMenu/getAll";
+const getMenuById: string = "menu";
 
 function API(method: string, accessor: string) {
   if (method === "getList") {
@@ -54,6 +65,9 @@ function API(method: string, accessor: string) {
     } else if (accessor === "roleSelect") {
       return getAllRoles;
     }
+    else if (accessor === "menu") {
+      return getAllMenu;
+    }
   } else if (method === "getMany") {
     if (accessor === "roleSelect") {
       return getAllRoles;
@@ -67,6 +81,8 @@ function API(method: string, accessor: string) {
       return createUser;
     } else if (accessor === "branch") {
       return addBranch;
+    }else if (accessor === "menu"){
+      return createMenu;
     } else if (accessor === "roles") {
       return assignRole;
     }
@@ -98,9 +114,9 @@ export default {
     const { field, order } = params.sort;
     const query = {
       order: JSON.stringify(order),
-      sortByName:JSON.stringify(field),
-      limit: JSON.stringify( (page * perPage)),
-      offset:JSON.stringify((page - 1) * perPage),
+      sortByName: JSON.stringify(field),
+      limit: JSON.stringify(page * perPage),
+      offset: JSON.stringify((page - 1) * perPage),
       filter: JSON.stringify(params.filter),
     };
 
@@ -127,9 +143,9 @@ export default {
       filter: JSON.stringify({ id: params.ids }),
     };
     const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
-    return httpClient(url).then(({ json }) => ({
+    return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: json.length,
+      total: parseInt(headers.get("count") || ""),
     }));
   },
   getManyReference: (endpoint: string, params: any) => {
@@ -174,7 +190,7 @@ export default {
       method: "POST",
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({
-      data: { ...params.data, id: json},
+      data: { ...params.data, id: json },
     }));
   },
   deleteMany: (endpoint: string, params: any) => {
