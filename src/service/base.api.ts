@@ -126,8 +126,10 @@ export default {
     const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: parseInt(headers.get("count") || "0"),
-    }));
+      total: parseInt(headers.get('count')||'0'),
+    }
+    )
+    );
   },
   getOne: (endpoint: string, params: any) => {
     var apiEndpoint = API("getOne", endpoint);

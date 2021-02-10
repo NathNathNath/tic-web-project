@@ -12,8 +12,12 @@ import {
   Edit,
   SaveButton,
   EditProps,
+  BooleanInput,
+  DeleteButton,
+  CloneButton,
+  SortButton,
 } from "react-admin";
-import { Grid, InputAdornment, Toolbar, Typography } from "@material-ui/core";
+import { Grid, IconButton, InputAdornment, StepButton, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Merchant } from "../../util/interface";
 
@@ -34,12 +38,24 @@ const Title: FC<TitleProps> = ({ record }) => {
   return record ? <span>{record.business_name}</span> : null;
 };
 
+// const test:any = ()=> {
+//   console.log('THIS IS A TEST')
+// } 
+
+// const CustomToolbar = (props: any) => (
+  
+//   <Toolbar >
+//       <SaveButton {...props} mutationMode='pessimistic'/>
+//       <SaveButton {...props} label='Activate' onClick={test} />
+//   </Toolbar>
+// );
+
 const EditMerchant: FC<EditProps> = (props) => {
   const classes = useStyles();
   return (
-    <Edit {...props} title={<Title />}>
+    <Edit {...props} title={<Title />} >
       <TabbedForm>
-        <FormTab label="Information">
+        <FormTab label="Information" >
           <TextInput
             autoFocus
             label="Business Name"
@@ -56,9 +72,9 @@ const EditMerchant: FC<EditProps> = (props) => {
           <TextInput label="Merchant ID" source="merchant_id" fullWidth />
           <TextInput label="Business Type" source="business_type" fullWidth />
           <TextInput label="Contact Person" source="contact_person" />
-          <NumberInput label="Contact Number" source="contact_number" />
+          <TextInput label="Contact Number" source="contact_number" />
           <TextInput label="Email Address" source="merchant_email_address" />
-          <TextInput source="is_active" defaultValue="true" disabled />
+          <BooleanInput source="is_active"  label='Activate'/>
         </FormTab>
         <FormTab label="License">
           <NumberInput
