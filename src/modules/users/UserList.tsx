@@ -14,6 +14,7 @@ import {
   useListContext,
   EditButton,
 } from "react-admin";
+import logic from "./logic"
 import { makeStyles } from "@material-ui/core/styles";
 
 const UserList: FC<ListProps> = (props) => {
