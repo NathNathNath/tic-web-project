@@ -38,5 +38,4 @@ const AddUser: FC<CreateProps> = (props) => {
     </Create>
   );
 };
-
 export default AddUser;
