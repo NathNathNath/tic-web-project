@@ -13,15 +13,21 @@ import {
   DateInput,
   useListContext,
   EditButton,
+  NumberInput,
+  BooleanInput,
+  TextInput,
 } from "react-admin";
 import { makeStyles } from "@material-ui/core/styles";
 import MerchantDetails from "./MerchantDetails";
 
 const ListFilters = (props: Omit<FilterProps, "children">) => (
   <Filter {...props}>
-    <DateInput source="date_gte" />
-    <DateInput source="date_lte" />
-  </Filter>
+  <DateInput label="Date" source="createdAt" />
+  <NumberInput label="ID" source="id" />
+  <TextInput label="Name" source="name" />
+  <TextInput label="Merchant Id" source="merchant_id" />
+  <BooleanInput label="Active" source="is_active" />
+</Filter>
 );
 
 const useStyles = makeStyles((theme) => ({
