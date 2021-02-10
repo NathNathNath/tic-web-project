@@ -12,11 +12,9 @@ import {
   Edit,
   SaveButton,
   EditProps,
-  BooleanInput,
-  DeleteButton,
-  CloneButton,
-  SortButton,
+  email,
 } from "react-admin";
+
 import { Grid, IconButton, InputAdornment, StepButton, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Merchant } from "../../util/interface";
@@ -33,7 +31,7 @@ const useStyles = makeStyles({
 interface TitleProps {
   record?: Merchant;
 }
-
+const validateEmail = email();
 const Title: FC<TitleProps> = ({ record }) => {
   return record ? <span>{record.business_name}</span> : null;
 };
@@ -72,9 +70,9 @@ const EditMerchant: FC<EditProps> = (props) => {
           <TextInput label="Merchant ID" source="merchant_id" fullWidth />
           <TextInput label="Business Type" source="business_type" fullWidth />
           <TextInput label="Contact Person" source="contact_person" />
-          <TextInput label="Contact Number" source="contact_number" />
-          <TextInput label="Email Address" source="merchant_email_address" />
-          <BooleanInput source="is_active"  label='Activate'/>
+          <NumberInput label="Contact Number" source="contact_number" />
+          <TextInput label="Email Address" source="merchant_email_address" validate={validateEmail} />
+          <TextInput source="is_active" defaultValue="true" disabled />
         </FormTab>
         <FormTab label="License">
           <NumberInput
