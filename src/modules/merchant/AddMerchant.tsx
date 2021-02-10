@@ -40,7 +40,7 @@ const AddMerchant: FC<CreateProps> = (props) => {
           <TextInput label="Merchant ID" source="merchant_id" fullWidth />
           <TextInput label="Business Type" source="business_type" fullWidth />
           <TextInput label="Contact Person" source="contact_person" />
-          <NumberInput label="Contact Number" source="contact_number" />
+          <TextInput label="Contact Number" source="contact_number" />
           <TextInput label="Email Address" source="merchant_email_address" />
           <TextInput source="is_active" defaultValue="true" disabled/>
         </FormTab>
