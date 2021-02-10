@@ -1,8 +1,7 @@
 import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
+export const apiUrl = process.env.APIURL;
 
-export const apiUrl = "http://localhost:3001";
-// export const apiUrl = "http://10.169.2.206:3001";
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {
     options.headers = new Headers({ Accept: "application/json" });
@@ -13,6 +12,7 @@ const httpClient = (url: string, options: any = {}) => {
 };
 
 export const authLogin = (endpoint: string, params: any) => {
+  console.log(apiUrl);
   return httpClient(`${apiUrl}/${endpoint}`, {
     method: "POST",
     body: JSON.stringify(params),
@@ -126,10 +126,8 @@ export default {
     const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: parseInt(headers.get('count')||'0'),
-    }
-    )
-    );
+      total: parseInt(headers.get("count") || "0"),
+    }));
   },
   getOne: (endpoint: string, params: any) => {
     var apiEndpoint = API("getOne", endpoint);

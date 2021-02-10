@@ -14,6 +14,9 @@ import { Field, withTypes } from "react-final-form";
 import { LoginForm } from "../util/interface";
 import { useLocation } from "react-router-dom";
 import UserIcon from "@material-ui/icons/People";
+var PACKAGE = require("./../../package.json");
+var version = PACKAGE.version;
+var version_prefix = process.env.VERSION_PREFIX;
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -168,6 +171,9 @@ const Login: FC = () => {
               </CardActions>
             </Card>
             <Notification />
+            <h3>
+              v.{version}-{version_prefix}
+            </h3>
           </div>
         </form>
       )}
