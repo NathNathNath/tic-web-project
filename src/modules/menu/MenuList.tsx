@@ -22,11 +22,10 @@ import MenuDetails from "./MenuDetails";
 
 const ListFilters = (props: Omit<FilterProps, "children">) => (
   <Filter {...props}>
-    {/* <DateInput label="Date" source="createdAt" />
+    <DateInput label="Date" source="createdAt" />
     <NumberInput label="ID" source="id" />
     <TextInput label="Name" source="name" />
     <TextInput label="Merchant Id" source="merchant_id" />
-    <BooleanInput label="Active" source="is_active" /> */}
   </Filter>
 );
 

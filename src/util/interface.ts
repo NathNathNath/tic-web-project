@@ -49,4 +49,3 @@ export interface Menu extends Record {
   id: Identifier;
   image_path: string;
 }
-}
