@@ -48,7 +48,7 @@ const BranchList: FC<ListProps> = (props) => {
       {...props}
       filters={<ListFilters />}
       perPage={25}
-      sort={{ field: "date", order: "desc" }}
+      sort={{ field: "updatedAt", order: "desc" }}
     >
       <Datagrid rowClick="expand">
         <TextField label="Name" source="name" />

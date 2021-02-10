@@ -1,7 +1,7 @@
 import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
 
-export const apiUrl = "http://192.168.0.109:3001";
+export const apiUrl = "http://localhost:3001";
 // export const apiUrl = "http://10.169.2.206:3001";
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {
@@ -19,7 +19,14 @@ export const authLogin = (endpoint: string, params: any) => {
   }).then((response) => ({ response }));
 };
 
-export const authRefresh = (endpoint: string, params: any) => {};
+export const authRefresh = (endpoint: string, params: any) => {
+  const token = localStorage.getItem("refreshToken");
+  return httpClient(`${apiUrl}/${endpoint}`, {
+    method: "POST",
+    headers: new Headers({ Authorization: "Bearer " + token }),
+    body: JSON.stringify(params),
+  }).then((response) => ({ response }));
+};
 
 //APIs
 //Merchant
@@ -33,10 +40,12 @@ const getUserById: string = "users/getUserById";
 const createUser: string = "users/addUser";
 const updateUser: string = "users/updateUser";
 const getAllRoles: string = "roles/getallrole";
+const getAllRolesAssigned: string = "roles/getAllRoleAssigned";
+const assignRole: string = "roles/assignrole";
 //Branch
 const getAllBranches: string = "branches/getBranches/getAll";
 const addBranch: string = "branches/addBranches/add";
-const getOneBranch: string = "branches"
+const getOneBranch: string = "branches";
 const updateBranch: string = "branches/toUpdate/updateBranch";
 //Menu
 const createMenu: string = "menu/addMenu/add";
@@ -47,19 +56,23 @@ function API(method: string, accessor: string) {
   if (method === "getList") {
     if (accessor === "merchant") {
       return getAllMerchant;
-    } else if (accessor === "users") {
+    } else if (accessor === "users" || accessor === "userSelect") {
       return getAllUsers;
     } else if (accessor === "roles") {
-      return getAllRoles;
+      return getAllRolesAssigned;
     } else if (accessor === "branch") {
       return getAllBranches;
+    } else if (accessor === "roleSelect") {
+      return getAllRoles;
     }
     else if (accessor === "menu") {
       return getAllMenu;
     }
   } else if (method === "getMany") {
-    if (accessor === "roles") {
+    if (accessor === "roleSelect") {
       return getAllRoles;
+    } else if (accessor === "userSelect") {
+      return getAllUsers;
     }
   } else if (method === "create") {
     if (accessor === "merchant") {
@@ -70,13 +83,15 @@ function API(method: string, accessor: string) {
       return addBranch;
     }else if (accessor === "menu"){
       return createMenu;
+    } else if (accessor === "roles") {
+      return assignRole;
     }
   } else if (method === "update") {
     if (accessor === "merchant") {
       return updateMerchant;
     } else if (accessor === "users") {
       return updateUser;
-    } else if (accessor === "branch"){
+    } else if (accessor === "branch") {
       return updateBranch;
     }
   } else if (method === "getOne") {
@@ -84,8 +99,7 @@ function API(method: string, accessor: string) {
       return getUserById;
     } else if (accessor === "merchant") {
       return getOneMerchant;
-    } 
-    else if (accessor === "branch"){
+    } else if (accessor === "branch") {
       return getOneBranch;
     }
   }
@@ -99,15 +113,17 @@ export default {
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const query = {
-      sort: JSON.stringify([field, order]),
-      range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
+      order: JSON.stringify(order),
+      sortByName: JSON.stringify(field),
+      limit: JSON.stringify(page * perPage),
+      offset: JSON.stringify((page - 1) * perPage),
       filter: JSON.stringify(params.filter),
     };
-    const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
 
+    const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: json.length,
+      total: parseInt(headers.get("count") || ""),
     }));
   },
   getOne: (endpoint: string, params: any) => {
@@ -125,9 +141,9 @@ export default {
       filter: JSON.stringify({ id: params.ids }),
     };
     const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
-    return httpClient(url).then(({ json }) => ({
+    return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: json.length,
+      total: parseInt(headers.get("count") || ""),
     }));
   },
   getManyReference: (endpoint: string, params: any) => {
@@ -166,12 +182,13 @@ export default {
     }).then(({ json }) => ({ data: json }));
   },
   create: (endpoint: string, params: any) => {
+    console.log(endpoint);
     var apiEndpoint = API("create", endpoint);
     return httpClient(`${apiUrl}/${apiEndpoint}`, {
       method: "POST",
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({
-      data: { ...params.data, id: json.id },
+      data: { ...params.data, id: json },
     }));
   },
   deleteMany: (endpoint: string, params: any) => {

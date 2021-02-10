@@ -7,6 +7,7 @@ import { DashboardMenuItem, MenuItemLink, MenuProps } from "react-admin";
 import { AppState } from "../util/types";
 import dashboard from "./../modules/dashboard";
 import users from "./../modules/users";
+import roles from "./../modules/roles";
 import merchant from "./../modules/merchant";
 import branch from "./../modules/branch";
 import menu from "./../modules/menu";
@@ -30,6 +31,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
         to={`/users`}
         primaryText={"Users"}
         leftIcon={<users.icon />}
+        onClick={onMenuClick}
+        sidebarIsOpen={open}
+        dense={dense}
+      />
+      <MenuItemLink
+        to={`/roles`}
+        primaryText={"Roles"}
+        leftIcon={<roles.icon />}
         onClick={onMenuClick}
         sidebarIsOpen={open}
         dense={dense}
