@@ -17,5 +17,6 @@ export interface Branch extends Record {
 }
 
 export interface Menu extends Record {
-  id: Identifier
+  id: Identifier;
+  image_path: string;
 }
