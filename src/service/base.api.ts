@@ -21,11 +21,13 @@ export const authLogin = (endpoint: string, params: any) => {
 
 export const authRefresh = (endpoint: string, params: any) => {
   const token = localStorage.getItem("refreshToken");
-  return httpClient(`${apiUrl}/${endpoint}`, {
-    method: "POST",
-    headers: new Headers({ Authorization: "Bearer " + token }),
-    body: JSON.stringify(params),
-  }).then((response) => ({ response }));
+  var options: any = {};
+  options.headers = new Headers();
+  options.headers.set("Authorization", `Bearer ${token}`);
+  options.headers.set("Accept", "application/json");
+  return fetchUtils
+    .fetchJson(`${apiUrl}/${endpoint}`, options)
+    .then((response) => ({ data: response }));
 };
 
 //APIs
@@ -64,8 +66,7 @@ function API(method: string, accessor: string) {
       return getAllBranches;
     } else if (accessor === "roleSelect") {
       return getAllRoles;
-    }
-    else if (accessor === "menu") {
+    } else if (accessor === "menu") {
       return getAllMenu;
     }
   } else if (method === "getMany") {
@@ -73,6 +74,8 @@ function API(method: string, accessor: string) {
       return getAllRoles;
     } else if (accessor === "userSelect") {
       return getAllUsers;
+    } else if (accessor === "roles") {
+      return getAllRolesAssigned;
     }
   } else if (method === "create") {
     if (accessor === "merchant") {
@@ -81,7 +84,7 @@ function API(method: string, accessor: string) {
       return createUser;
     } else if (accessor === "branch") {
       return addBranch;
-    }else if (accessor === "menu"){
+    } else if (accessor === "menu") {
       return createMenu;
     } else if (accessor === "roles") {
       return assignRole;
@@ -145,10 +148,11 @@ export default {
     const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: parseInt(headers.get("count") || ""),
+      total: parseInt(headers.get("count") || "0"),
     }));
   },
   getManyReference: (endpoint: string, params: any) => {
+    console.log(endpoint);
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const query = {
@@ -168,7 +172,7 @@ export default {
   },
   update: (endpoint: string, params: any) => {
     var apiEndpoint = API("update", endpoint);
-    console.log(params);
+    console.log(endpoint);
     return httpClient(`${apiUrl}/${apiEndpoint}`, {
       method: "PUT",
       body: JSON.stringify(params.data),
