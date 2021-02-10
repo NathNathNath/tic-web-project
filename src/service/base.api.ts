@@ -19,7 +19,14 @@ export const authLogin = (endpoint: string, params: any) => {
   }).then((response) => ({ response }));
 };
 
-export const authRefresh = (endpoint: string, params: any) => {};
+export const authRefresh = (endpoint: string, params: any) => {
+  const token = localStorage.getItem("refreshToken");
+  return httpClient(`${apiUrl}/${endpoint}`, {
+    method: "POST",
+    headers: new Headers({ Authorization: "Bearer " + token }),
+    body: JSON.stringify(params),
+  }).then((response) => ({ response }));
+};
 
 //APIs
 //Merchant
@@ -98,19 +105,17 @@ export default {
     const { field, order } = params.sort;
     const query = {
       order: JSON.stringify(order),
-      sortByName:JSON.stringify(field),
-      limit: JSON.stringify( (page * perPage)),
-      offset:JSON.stringify((page - 1) * perPage),
+      sortByName: JSON.stringify(field),
+      limit: JSON.stringify(page * perPage),
+      offset: JSON.stringify((page - 1) * perPage),
       filter: JSON.stringify(params.filter),
     };
 
     const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: parseInt(headers.get('count')||''),
-    }
-    )
-    );
+      total: parseInt(headers.get("count") || ""),
+    }));
   },
   getOne: (endpoint: string, params: any) => {
     var apiEndpoint = API("getOne", endpoint);
@@ -127,9 +132,9 @@ export default {
       filter: JSON.stringify({ id: params.ids }),
     };
     const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
-    return httpClient(url).then(({ json }) => ({
+    return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: json.length,
+      total: parseInt(headers.get("count") || ""),
     }));
   },
   getManyReference: (endpoint: string, params: any) => {
@@ -174,7 +179,7 @@ export default {
       method: "POST",
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({
-      data: { ...params.data, id: json},
+      data: { ...params.data, id: json },
     }));
   },
   deleteMany: (endpoint: string, params: any) => {
