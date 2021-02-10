@@ -60,13 +60,13 @@ const authProvider: AuthProvider = {
   },
   getPermissions: () => {
     const role = localStorage.getItem("role");
-    return Promise.resolve(role);
+    return role === "" ? Promise.resolve("SA") : Promise.resolve(role);
   },
   getIdentity: () => {
     return Promise.resolve({
       id: localStorage.getItem("login") as string,
       fullName: localStorage.getItem("user") as string,
-      avatar: localStorage.getItem("avatar") as string,
+      //avatar: localStorage.getItem("avatar") as string,
     });
   },
 };
