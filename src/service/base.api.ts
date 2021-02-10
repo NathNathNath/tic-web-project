@@ -1,7 +1,7 @@
 import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
 
-export const apiUrl = "http://localhost:3001";
+export const apiUrl = "http://192.168.0.109:3001";
 // export const apiUrl = "http://10.169.2.206:3001";
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {

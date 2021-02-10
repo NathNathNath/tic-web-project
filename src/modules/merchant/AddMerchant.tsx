@@ -10,6 +10,7 @@ import {
   TextInput,
   required,
   CreateProps,
+  email,
 } from "react-admin";
 import { Grid, InputAdornment, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,26 +24,24 @@ const useStyles = makeStyles({
   heightFormGroup: { display: "inline-block", marginLeft: 32 },
 });
 
+// Random MerchID
 const _merchID = () =>{ var _ranValue = Math.floor(Math.random() *90000) + 10000; return _ranValue; };
+// Email Validation
+const validateEmail = email();
+
 const AddMerchant: FC<CreateProps> = (props) => {
   const classes = useStyles();
   return (
     <Create {...props}>
       <TabbedForm>
         <FormTab label="Information">
-          <TextInput
-            autoFocus
-            label="Business Name"
-            source="business_name"
-            fullWidth
-            validate={required()}
-          />
+          <TextInput autoFocus label="Business Name" source="business_name" fullWidth validate={required()}/>
           <TextInput label="Description" source="description" fullWidth validate={required()} />
           <TextInput label="Merchant ID" source="merchant_id" defaultValue={_merchID()} fullWidth disabled/>
           <TextInput label="Business Type" source="business_type" fullWidth />
           <TextInput label="Contact Person" source="contact_person" />
           <NumberInput label="Contact Number" source="contact_number" />
-          <TextInput label="Email Address" source="merchant_email_address" />
+          <TextInput label="Email Address" source="merchant_email_address" type="email" validate={validateEmail} />
           <TextInput source="is_active" defaultValue="true" disabled/>
         </FormTab>
         <FormTab label="License">

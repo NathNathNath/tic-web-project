@@ -12,6 +12,7 @@ import {
   Edit,
   SaveButton,
   EditProps,
+  email,
 } from "react-admin";
 import { Grid, InputAdornment, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
 interface TitleProps {
   record?: Merchant;
 }
-
+const validateEmail = email();
 const Title: FC<TitleProps> = ({ record }) => {
   return record ? <span>{record.business_name}</span> : null;
 };
@@ -57,7 +58,7 @@ const EditMerchant: FC<EditProps> = (props) => {
           <TextInput label="Business Type" source="business_type" fullWidth />
           <TextInput label="Contact Person" source="contact_person" />
           <NumberInput label="Contact Number" source="contact_number" />
-          <TextInput label="Email Address" source="merchant_email_address" />
+          <TextInput label="Email Address" source="merchant_email_address" validate={validateEmail} />
           <TextInput source="is_active" defaultValue="true" disabled />
         </FormTab>
         <FormTab label="License">
