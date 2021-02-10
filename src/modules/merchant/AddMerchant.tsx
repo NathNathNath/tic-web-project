@@ -23,6 +23,7 @@ const useStyles = makeStyles({
   heightFormGroup: { display: "inline-block", marginLeft: 32 },
 });
 
+const _merchID = () =>{ var _ranValue = Math.floor(Math.random() *90000) + 10000; return _ranValue; };
 const AddMerchant: FC<CreateProps> = (props) => {
   const classes = useStyles();
   return (
@@ -37,7 +38,7 @@ const AddMerchant: FC<CreateProps> = (props) => {
             validate={required()}
           />
           <TextInput label="Description" source="description" fullWidth validate={required()} />
-          <TextInput label="Merchant ID" source="merchant_id" fullWidth />
+          <TextInput label="Merchant ID" source="merchant_id" defaultValue={_merchID()} fullWidth disabled/>
           <TextInput label="Business Type" source="business_type" fullWidth />
           <TextInput label="Contact Person" source="contact_person" />
           <NumberInput label="Contact Number" source="contact_number" />
