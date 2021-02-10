@@ -1,5 +1,6 @@
 import { AuthProvider } from "react-admin";
 import { authLogin, authRefresh } from "../service/base.api";
+import api from "../service/base.api";
 const authProvider: AuthProvider = {
   login: ({ username, password }) => {
     return authLogin("login", {
@@ -25,7 +26,6 @@ const authProvider: AuthProvider = {
     localStorage.removeItem("role");
     localStorage.removeItem("login");
     localStorage.removeItem("user");
-    localStorage.removeItem("avatar");
     localStorage.setItem("authenticated", "false");
     return Promise.resolve();
   },
@@ -35,6 +35,25 @@ const authProvider: AuthProvider = {
       : Promise.resolve();
   },
   checkAuth: () => {
+    api.getMany("roles", {}).then((res) => {
+      var roles = "";
+      var rolesAssigned = JSON.parse(JSON.stringify(res.data));
+      rolesAssigned.forEach((roleAssign: any) => {
+        if (roleAssign.userModel.username === localStorage.getItem("user")) {
+          if (roleAssign.userId === roleAssign.userModel.id) {
+            roles += roleAssign.roleModel.code + ";";
+          }
+        }
+      });
+      localStorage.setItem("role", roles);
+    });
+
+    authRefresh("refresh-token", {}).then((res) => {
+      var accessToken = res.data.json.accessToken;
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("authenticated", "true");
+    });
+
     return localStorage.getItem("authenticated") === "true"
       ? Promise.resolve()
       : Promise.reject();
