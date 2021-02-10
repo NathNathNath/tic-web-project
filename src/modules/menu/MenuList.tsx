@@ -26,7 +26,6 @@ const ListFilters = (props: Omit<FilterProps, "children">) => (
     <NumberInput label="ID" source="id" />
     <TextInput label="Name" source="name" />
     <TextInput label="Merchant Id" source="merchant_id" />
-    <BooleanInput label="Active" source="is_active" />
   </Filter>
 );
 
@@ -51,17 +50,9 @@ const MenuList: FC<ListProps> = (props) => {
     >
       <Datagrid rowClick="expand" expand={<MenuDetails />}>
         <TextField label="Name" source="name" />
+        <TextField label="Image Path" source="image_path" />
+        <TextField label="MerchantID" source="merchant_id" />
         <TextField label="Description" source="description" />
-        <TextField label="Merchant ID" source="merchant_id" />
-        <TextField label="QR Code" source="qrcode_path" />
-        <TextField label="Licenses" source="licenses" />
-        <TextField label="Bill Type" source="bill_type" />
-        <TextField label="Validated" source="validated" />
-        <TextField label="Active" source="is_active" />
-        <TextField label="Radius" source="radius" />
-        <TextField label="Latitude" source="lat" />
-        <TextField label="Longitude" source="long" />
-        <TextField label="Merchant E-mail" source="merchant_email_address" />
       </Datagrid>
     </List>
   );

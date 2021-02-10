@@ -1,10 +1,15 @@
 import * as React from "react";
+import {createRef} from 'react'
 import { FC } from "react";
+import Dropzone from 'react-dropzone';
 import {
   Create,
   FormTab,
   NumberInput,
   BooleanInput,
+  FileInput,
+  FileField,
+  ImageField,
   TabbedForm,
   TextInput,
   required,
@@ -35,19 +40,12 @@ const AddMenu: FC<CreateProps> = (props) => {
             fullWidth
             validate={required()}
           />
-          <TextInput label="Description" source="description" fullWidth validate={required()} />
-          <TextInput label="Merchant ID" source="merchant_id" fullWidth />
-          <TextInput label="QR Code" source="qrcode_path" fullWidth />
-          <NumberInput label="Licenses" source="licenses" />
-          <TextInput label="Bill Type" source="bill_type" />
-          <BooleanInput label="Validated" source="validated" />
-          <TextInput source="is_active" defaultValue="true" disabled/>
-          <TextInput label="Merchant E-mail" source="merchant_email_address" type="email" />
-        </FormTab>
-        <FormTab label="Coordinates">
-          <NumberInput label="Radius" source="radius" validate={required()} />
-          <NumberInput label="Latitude" source="lat" validate={required()} />
-          <NumberInput label="Longitude" source="long" validate={required()} />
+        <TextInput label="Description" source="description" fullWidth/>
+        <TextInput label="Merchant ID" source="merchant_id" fullWidth/>
+        <TextInput source="is_active" defaultValue="true" disabled/>
+        <FileInput source="image_path" label="Related files" dropzone>
+            <FileField source="src" title="title" />
+        </FileInput>
         </FormTab>
       </TabbedForm>
     </Create>
