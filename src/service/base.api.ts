@@ -47,6 +47,10 @@ const getAllBranches: string = "branches/getBranches/getAll";
 const addBranch: string = "branches/addBranches/add";
 const getOneBranch: string = "branches";
 const updateBranch: string = "branches/toUpdate/updateBranch";
+//Menu
+const createMenu: string = "menu/addMenu/add";
+const getAllMenu: string = "menu/getMenu/getAll";
+const getMenuById: string = "menu";
 
 function API(method: string, accessor: string) {
   if (method === "getList") {
@@ -61,6 +65,9 @@ function API(method: string, accessor: string) {
     } else if (accessor === "roleSelect") {
       return getAllRoles;
     }
+    else if (accessor === "menu") {
+      return getAllMenu;
+    }
   } else if (method === "getMany") {
     if (accessor === "roleSelect") {
       return getAllRoles;
@@ -74,6 +81,8 @@ function API(method: string, accessor: string) {
       return createUser;
     } else if (accessor === "branch") {
       return addBranch;
+    }else if (accessor === "menu"){
+      return createMenu;
     } else if (accessor === "roles") {
       return assignRole;
     }
