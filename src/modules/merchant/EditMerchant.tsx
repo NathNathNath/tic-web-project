@@ -12,9 +12,10 @@ import {
   Edit,
   SaveButton,
   EditProps,
-  email,Toolbar,
+  email,
 } from "react-admin";
-import { Grid, InputAdornment, Typography } from "@material-ui/core";
+
+import { Grid, IconButton, InputAdornment, StepButton, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Merchant } from "../../util/interface";
 
@@ -35,12 +36,24 @@ const Title: FC<TitleProps> = ({ record }) => {
   return record ? <span>{record.business_name}</span> : null;
 };
 
+// const test:any = ()=> {
+//   console.log('THIS IS A TEST')
+// } 
+
+// const CustomToolbar = (props: any) => (
+  
+//   <Toolbar >
+//       <SaveButton {...props} mutationMode='pessimistic'/>
+//       <SaveButton {...props} label='Activate' onClick={test} />
+//   </Toolbar>
+// );
+
 const EditMerchant: FC<EditProps> = (props) => {
   const classes = useStyles();
   return (
     <Edit {...props} title={<Title />} >
       <TabbedForm>
-        <FormTab label="Information">
+        <FormTab label="Information" >
           <TextInput
             autoFocus
             label="Business Name"
