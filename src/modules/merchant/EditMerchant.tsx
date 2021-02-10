@@ -12,9 +12,9 @@ import {
   Edit,
   SaveButton,
   EditProps,
-  email,
+  email,Toolbar,
 } from "react-admin";
-import { Grid, InputAdornment, Toolbar, Typography } from "@material-ui/core";
+import { Grid, InputAdornment, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Merchant } from "../../util/interface";
 
@@ -38,7 +38,7 @@ const Title: FC<TitleProps> = ({ record }) => {
 const EditMerchant: FC<EditProps> = (props) => {
   const classes = useStyles();
   return (
-    <Edit {...props} title={<Title />}>
+    <Edit {...props} title={<Title />} >
       <TabbedForm>
         <FormTab label="Information">
           <TextInput
