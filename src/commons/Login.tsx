@@ -17,7 +17,7 @@ import { useLocation } from "react-router-dom";
 import { LockOpen } from "@material-ui/icons";
 var PACKAGE = require("./../../package.json");
 var version = PACKAGE.version;
-var version_prefix = process.env.REACT_APP_VERSION_SUFFIX;
+var version_prefix = '1';
 
 const useStyles = makeStyles((theme) => ({
   main: {
