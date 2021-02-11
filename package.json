@@ -31,9 +31,7 @@
     "webpack": "4.44.2",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "3.11.0"
-  },
-  "devDependencies": {
+    "webpack-dev-server": "3.11.0",
     "@types/classnames": "^2.2.9",
     "@types/jest": "^26.0.19",
     "@types/node": "^12.12.14",
