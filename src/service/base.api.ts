@@ -3,7 +3,7 @@ import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
 import md5Hasher from "../util/md5Hasher";
 
-export const apiUrl = 'https://dev-tic-api.herokuapp.com';
+export const apiUrl = process.env.REACT_APP_APIURL;
 
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {
