@@ -45,8 +45,8 @@
   },
   "scripts": {
     "debug": "react-scripts --inspect-brk test --runInBand --no-cache",
-    "start": "npm run-script build && react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "build": "npm run-script build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
