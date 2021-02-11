@@ -1,3 +1,4 @@
+import "dotenv/config";
 import React, { FC, useState } from "react";
 import {
   Avatar,
@@ -13,16 +14,15 @@ import { Notification, useTranslate, useLogin, useNotify } from "react-admin";
 import { Field, withTypes } from "react-final-form";
 import { LoginForm } from "../util/interface";
 import { useLocation } from "react-router-dom";
-import UserIcon from "@material-ui/icons/People";
+import { LockOpen } from "@material-ui/icons";
 var PACKAGE = require("./../../package.json");
 var version = PACKAGE.version;
-var version_prefix = process.env.VERSION_PREFIX;
+var version_prefix = process.env.REACT_APP_VERSION_SUFFIX;
 
 const useStyles = makeStyles((theme) => ({
   main: {
     display: "flex",
     flexDirection: "column",
-    minHeight: "100vh",
     alignItems: "center",
     justifyContent: "flex-start",
     //background: "url(https://source.unsplash.com/random/1600x900)",
@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     minWidth: 300,
-    marginTop: "6em",
     backgroundColor: "#e0e0e0",
+    borderRadius: 15,
   },
   avatar: {
     margin: "1em",
@@ -43,10 +43,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   hint: {
-    marginTop: "1em",
+    fontWeight: "bold",
     display: "flex",
     justifyContent: "center",
-    color: theme.palette.grey[500],
+    color: "#ffffff",
   },
   form: {
     padding: "0 1em 1em 1em",
@@ -56,6 +56,20 @@ const useStyles = makeStyles((theme) => ({
   },
   actions: {
     padding: "0 1em 1em 1em",
+  },
+  version: {
+    color: "#ffffff",
+    fontFamily: "sans-serif",
+    marginBottom: "1em",
+  },
+  title: {
+    color: "#ffffff",
+    fontFamily: "sans-serif",
+    marginBottom: "1em",
+    fontSize: 30,
+  },
+  container: {
+    padding: "10em",
   },
 }));
 
@@ -126,56 +140,61 @@ const Login: FC = () => {
       onSubmit={handleSubmit}
       validate={validate}
       render={({ handleSubmit }) => (
-        <form onSubmit={handleSubmit} noValidate>
-          <div className={classes.main}>
-            <Card className={classes.card}>
-              <div className={classes.avatar}>
-                <Avatar className={classes.icon}>
-                  <UserIcon />
-                </Avatar>
-              </div>
-              <div className={classes.hint}>Talk Innovations Corporation</div>
-              <div className={classes.form}>
-                <div className={classes.input}>
-                  <Field
-                    autoFocus
-                    name="username"
-                    // @ts-ignore
-                    component={renderInput}
-                    label={"Username"}
-                    disabled={loading}
-                  />
+        <div className={classes.container}>
+          <form onSubmit={handleSubmit} noValidate>
+            <div className={classes.main}>
+              <span className={classes.title}>
+                Talk Innovations Corporation
+              </span>
+              <Card className={classes.card}>
+                <div className={classes.avatar}>
+                  <Avatar className={classes.icon}>
+                    <LockOpen />
+                  </Avatar>
                 </div>
-                <div className={classes.input}>
-                  <Field
-                    name="password"
-                    // @ts-ignore
-                    component={renderInput}
-                    label={"Password"}
-                    type="password"
-                    disabled={loading}
-                  />
+                <div className={classes.form}>
+                  <div className={classes.input}>
+                    <Field
+                      autoFocus
+                      name="username"
+                      // @ts-ignore
+                      component={renderInput}
+                      label={"Username"}
+                      disabled={loading}
+                    />
+                  </div>
+                  <div className={classes.input}>
+                    <Field
+                      name="password"
+                      // @ts-ignore
+                      component={renderInput}
+                      label={"Password"}
+                      type="password"
+                      disabled={loading}
+                    />
+                  </div>
                 </div>
-              </div>
-              <CardActions className={classes.actions}>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  color="primary"
-                  disabled={loading}
-                  fullWidth
-                >
-                  {loading && <CircularProgress size={25} thickness={5} />}
-                  {!loading && "Login"}
-                </Button>
-              </CardActions>
-            </Card>
-            <Notification />
-            <h3>
-              v.{version}-{version_prefix}
-            </h3>
-          </div>
-        </form>
+                <CardActions className={classes.actions}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    color="primary"
+                    disabled={loading}
+                    fullWidth
+                  >
+                    {loading && <CircularProgress size={25} thickness={5} />}
+                    {!loading && "Login"}
+                  </Button>
+                </CardActions>
+              </Card>
+              <Notification />
+              <br />
+              <span className={classes.version}>
+                v.{version}-{version_prefix}
+              </span>
+            </div>
+          </form>
+        </div>
       )}
     />
   );
