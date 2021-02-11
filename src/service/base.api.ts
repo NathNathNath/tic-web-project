@@ -1,7 +1,10 @@
+import "dotenv/config";
 import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
-import mdHasher from "../util/md5Hasher";
-export const apiUrl = process.env.APIURL;
+import md5Hasher from "../util/md5Hasher";
+
+export const apiUrl = process.env.REACT_APP_APIURL;
+
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {
     options.headers = new Headers({ Accept: "application/json" });
@@ -12,7 +15,8 @@ const httpClient = (url: string, options: any = {}) => {
 };
 
 export const authLogin = (endpoint: string, params: any) => {
-  params.password = mdHasher.convertMD(JSON.stringify(params.password));
+  params.password = md5Hasher.convertMD(JSON.stringify(params.password));
+
   return httpClient(`${apiUrl}/${endpoint}`, {
     method: "POST",
     body: JSON.stringify(params),
@@ -126,8 +130,8 @@ export default {
     const url = `${apiUrl}/${apiEndpoint}?${stringify(query)}`;
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: parseInt(headers.get('count')||'0'),
       total: parseInt(headers.get("count") || "0"),
+    }));
   },
   getOne: (endpoint: string, params: any) => {
     var apiEndpoint = API("getOne", endpoint);
@@ -171,7 +175,6 @@ export default {
 
   // Update here
   update: (endpoint: string, params: any) => {
-
     var apiEndpoint = API("update", endpoint);
     console.log(endpoint);
     return httpClient(`${apiUrl}/${apiEndpoint}`, {
@@ -194,8 +197,8 @@ export default {
     console.log(endpoint);
     var apiEndpoint = API("create", endpoint);
 
+    params = md5Hasher.endPointChecker(endpoint, params);
 
-    params = mdHasher.endPointChecker(endpoint,params);
     return httpClient(`${apiUrl}/${apiEndpoint}`, {
       method: "POST",
       body: JSON.stringify(params.data),
